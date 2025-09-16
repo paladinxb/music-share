@@ -1,0 +1,83 @@
+<!-- src/app/app.component.html -->
+<div class="main-container">
+  <div class="title">{{ title }}</div>
+
+  <div class="songs-list-container">
+    @for (song of songs; track song.title) {
+      <div class="song-box">
+
+        <!-- 1. Кнопка INFO (поверх всего) -->
+        @if (!song.isInfoVisible) {
+          <button class="info-button" (click)="showInfo(song)">i</button>
+        }
+
+        <!-- 2. Основной контент карточки -->
+        <div class="song-main-content">
+          <div class="song-cover">
+            <h3 class="cover-title">{{ song.title }}</h3>
+          </div>
+          <div class="song-info">
+            <div class="song-details">
+              <h4 class="info-title">{{ song.title }}</h4>
+              <p class="info-artist">{{ song.artist }}</p>
+            </div>
+            <div class="song-controls">
+              <button class="quality-button" (click)="changeQuality(song)">
+                {{ song_quality[song.qualityIndex] }}
+              </button>
+              <div class="volume-control">
+                <input class="volume-slider" type="range" min="0" max="100" [(ngModel)]="song.volume">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3. Информационная панель (скрыта по умолчанию) -->
+        @if (song.isInfoVisible) {
+          <div class="song-info-panel">
+            <button class="back-button" (click)="hideInfo(song)">← Назад</button>
+            <h3>{{ song.title }}</h3>
+            <div class="info-line">
+              <strong>Жанр:</strong> {{ song.genre }}
+            </div>
+            <div class="info-line">
+              <strong>Оценка:</strong> {{ song.rating }} / 5.0
+            </div>
+            <button class="project-photo-button">Фото проекта</button>
+          </div>
+        }
+
+      </div>
+    }
+  </div>
+
+  <div class="bottom-info">
+    <div class="bottom-info-content">
+
+      <!-- Левый блок: Ссылка на GitHub -->
+      <div class="bottom-left">
+
+        Сайт и музыка была создана лично мной <br>
+
+        <a href="https://github.com/paladinxb" target="_blank" rel="noopener noreferrer" class="github-link">
+          <!-- Иконка GitHub (встроена как SVG) -->
+          <svg class="github-icon" viewBox="0 0 16 16" fill="currentColor">
+            <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"/>
+          </svg>
+          <span>Source Code</span>
+        </a>
+      </div>
+
+      <!-- Центральный блок: Имя автора -->
+      <div class="bottom-center">
+        {{ author }}
+      </div>
+
+      <!-- Правый блок: Кнопка доната -->
+      <div class="bottom-right">
+        <button class="donate-button">❤️ Donate</button>
+      </div>
+
+    </div>
+  </div>
+</div>
