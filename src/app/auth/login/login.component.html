@@ -1,0 +1,17 @@
+<div class="auth-container">
+  <form class="auth-form" (ngSubmit)="onSubmit()">
+    <h2>Вход в MusicShare</h2>
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input type="email" id="email" [(ngModel)]="email" name="email" required>
+    </div>
+    <div class="form-group">
+      <label for="password">Пароль</label>
+      <input type="password" id="password" [(ngModel)]="password" name="password" required>
+    </div>
+    <button type="submit" class="submit-btn">Войти</button>
+    <p class="switch-form">
+      Нет аккаунта? <a routerLink="/register">Зарегистрироваться</a>
+    </p>
+  </form>
+</div>
