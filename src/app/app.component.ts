@@ -1,50 +1,52 @@
 // src/app/app.component.ts
-import { Component, OnInit } from '@angular/core'; // 1. Импортируем OnInit
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
-// (Опционально, но рекомендуется) Создаем интерфейс для наших данных
+// 1. Обновляем интерфейс
 interface Song {
   artist: string;
   title: string;
-  qualityIndex: number; // Каждая песня будет иметь свой индекс качества
+  qualityIndex: number;
+  volume: number;
+  genre: string;
+  rating: number;
+  isInfoVisible: boolean; // Флаг для показа/скрытия доп. информации
 }
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit { // 2. Реализуем OnInit
+export class AppComponent {
   title = 'MusicShare';
-  author = 'paladinxb';
+  author = 'Author - paladinxb';
 
-  // 3. Указываем, что наш массив соответствует интерфейсу Song
+  // 2. Обновляем массив, добавляя новые поля и isInfoVisible: false
   songs: Song[] = [
-    { artist: 'paladinxb', title: 'Hello World', qualityIndex: 0 },
-    { artist: 'The Virtuals', title: 'Angular Groove', qualityIndex: 0 },
-    { artist: 'DJ Component', title: 'Callback Funk', qualityIndex: 0 },
-    { artist: 'SynthWave Rider', title: 'Promise of the Grid', qualityIndex: 0 },
-    { artist: 'MC State', title: 'Reactive Flow', qualityIndex: 0 },
-    { artist: 'The Observers', title: 'Lazy Load Blues', qualityIndex: 0 }
+    { artist: 'paladinxb', title: 'Hello World', qualityIndex: 0, volume: 75, genre: 'Electronic', rating: 4.5, isInfoVisible: false },
+    { artist: 'The Virtuals', title: 'Angular Groove', qualityIndex: 0, volume: 75, genre: 'Funk', rating: 4.8, isInfoVisible: false },
+    { artist: 'DJ Component', title: 'Callback Funk', qualityIndex: 0, volume: 75, genre: 'Funk', rating: 4.6, isInfoVisible: false },
+    { artist: 'SynthWave Rider', title: 'Promise of the Grid', qualityIndex: 0, volume: 75, genre: 'Synthwave', rating: 4.9, isInfoVisible: false },
+    { artist: 'MC State', title: 'Reactive Flow', qualityIndex: 0, volume: 75, genre: 'Hip-Hop', rating: 4.7, isInfoVisible: false },
+    { artist: 'The Observers', title: 'Lazy Load Blues', qualityIndex: 0, volume: 75, genre: 'Blues', rating: 4.4, isInfoVisible: false }
   ];
 
-  // Массив доступных качеств
-  readonly song_quality = ['MP3', 'FLAC', 'WAV']; // Добавим еще одно для наглядности
+  readonly song_quality = ['MP3', 'FLAC'];
 
-  ngOnInit(): void {
-    // Этот метод вызывается один раз при инициализации компонента.
-    // Если бы в исходных данных не было qualityIndex, здесь было бы лучшее место его добавить.
+  changeQuality(song: Song): void {
+    song.qualityIndex = (song.qualityIndex + 1) % this.song_quality.length;
   }
 
-  // 4. Создаем метод, который будет вызываться по клику
-  changeQuality(song: Song): void {
-    // Получаем текущий индекс и увеличиваем его на 1
-    // Используем оператор % (остаток от деления) для "зацикливания" массива
-    // Например, если у нас 3 элемента (0, 1, 2) и текущий индекс 2,
-    // (2 + 1) % 3 = 3 % 3 = 0. Мы вернемся к первому элементу.
-    const newIndex = (song.qualityIndex + 1) % this.song_quality.length;
-    song.qualityIndex = newIndex;
+  // 3. Два новых метода для управления видимостью
+  showInfo(song: Song): void {
+    song.isInfoVisible = true;
+  }
+
+  hideInfo(song: Song): void {
+    song.isInfoVisible = false;
   }
 }

@@ -1,6 +1,5 @@
 /* src/app/app.component.css */
 
-/* .main-container и .title без изменений */
 .main-container {
   background-color: var(--primary-bg-color);
   width: 100%;
@@ -38,18 +37,22 @@
 
 /* === ПОЛНОСТЬЮ НОВЫЕ СТИЛИ ДЛЯ КАРТОЧКИ ПЕСНИ (КАК НА КАРТИНКЕ) === */
 .song-box {
-  background-color: #ffffff; /* Белый фон для нижней части */
-  border-radius: 16px; /* Более заметное скругление, как на картинке */
+  background-color: #ffffff;
+  border-radius: 16px;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.07);
-
-  /* Важно: скрывает все, что выходит за скругленные углы (например, углы картинки) */
   overflow: hidden;
-
-  /* Делаем карточку flex-контейнером, чтобы управлять вложенными блоками */
   display: flex;
   flex-direction: column;
-
   transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+  /* ВАЖНО: Делаем карточку родительским элементом для абсолютного позиционирования */
+  position: relative;
+}
+
+.song-main-content {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1; /* Растягивается на всю высоту */
 }
 
 .song-box:hover {
@@ -60,17 +63,16 @@
 /* --- Верхняя цветная часть --- */
 .song-cover {
   background-color: var(--element-bg-color);
-
-  /* Заставляет этот блок занимать все доступное пространство по высоте */
-  flex-grow: 1;
-
-  /* Центрируем название трека внутри */
   display: flex;
   align-items: center;
   justify-content: center;
-
   padding: 20px;
-  min-height: 150px; /* Минимальная высота, чтобы карточка не была слишком плоской */
+  /* 1. ДЕЛАЕМ ОБЛОЖКУ МЕНЬШЕ И КВАДРАТНОЙ */
+  width: 60%; /* Не на всю ширину карточки */
+  margin: 20px auto 0 auto; /* Отступы сверху и авто-отступы по бокам для центрирования */
+  border-radius: 12px;
+  aspect-ratio: 1 / 1; /* Гарантирует, что блок всегда будет квадратом */
+  flex-shrink: 0; /* Запрещаем блоку сжиматься */
 }
 
 .cover-title {
@@ -84,9 +86,10 @@
 /* --- Нижняя белая часть --- */
 .song-info {
   padding: 16px 20px;
-  /* Не дает этому блоку сжиматься */
-  flex-shrink: 0;
-  background-color: #ffffff; /* Явно указываем фон */
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
 }
 
 .info-title {
@@ -111,20 +114,88 @@
   clip-path: polygon(
     0 0, 30% 0, 40% 46.7%, 60% 46.7%, 70% 0, 100% 0, 100% 100%, 0 100%
   );
+
+  /* Используем flex для центрирования внутреннего контейнера */
   display: flex;
-  justify-content: center;
-  align-items: flex-end;
-  padding-bottom: 2vh;
+  justify-content: center; /* Центрируем по горизонтали */
+  align-items: flex-end;   /* Прижимаем к низу */
+
+  padding: 0 30px 2vh 30px; /* Добавляем боковые отступы */
   box-sizing: border-box;
+}
+
+/* НОВЫЙ КОНТЕЙНЕР для содержимого панели */
+.bottom-info-content {
+  width: 100%;
+  max-width: 1200px; /* Та же ширина, что и у сетки песен */
+  display: flex;
+  justify-content: space-between; /* Главное свойство: разносит блоки по краям */
+  align-items: center; /* Выравнивает все элементы по вертикальному центру */
+}
+
+/* Стили для левого, центрального и правого блоков */
+.bottom-left, .bottom-right {
+  flex: 1; /* Позволяет блокам занимать равное пространство */
+}
+
+.bottom-right {
+  text-align: right; /* Выравниваем содержимое правого блока по правому краю */
+}
+
+.bottom-center {
   font-size: 16pt;
   font-weight: bold;
   color: #333;
 }
 
+/* Стилизация ссылки на GitHub */
+.github-link {
+  display: inline-flex; /* Чтобы иконка и текст были в одну строку и выровнены */
+  align-items: center;
+  text-decoration: none;
+  color: #333;
+  font-weight: 600;
+  opacity: 0.7;
+  transition: opacity 0.2s ease;
+}
 
+.github-link:hover {
+  opacity: 1;
+}
+
+.github-icon {
+  width: 20px;
+  height: 20px;
+  margin-right: 8px;
+}
+
+/* Стилизация кнопки доната */
+.donate-button {
+  background-color: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  padding: 8px 16px;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.donate-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+
+.song-controls {
+  display: flex;
+  justify-content: space-between; /* Главное свойство: разносит элементы по краям */
+  align-items: center;
+  margin-top: auto; /* Прижимает блок к самому низу .song-info */
+  padding-top: 10px; /* Отступ от текста сверху */
+}
 
 .quality-button {
-  margin-top: 10px; /* Отступ сверху */
   padding: 6px 12px;
   border: 1px solid #ccc;
   border-radius: 6px;
@@ -136,4 +207,92 @@
 
 .quality-button:hover {
   background-color: #e0e0e0;
+}
+
+/* НОВЫЙ БЛОК: Контейнер для громкости */
+.volume-control {
+  display: flex;
+  align-items: center;
+}
+
+.volume-icon {
+  width: 20px;
+  height: 20px;
+  color: #888;
+  margin-right: 8px;
+}
+
+.volume-slider {
+  width: 80px; /* Задаем ширину слайдеру */
+  cursor: pointer;
+}
+
+
+.info-button {
+  position: absolute; /* Позиционируем относительно .song-box */
+  top: 12px;
+  left: 12px;
+  margin-top: 20px;
+  margin-left: 30px;
+  z-index: 10; /* Поверх основного контента */
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: none;
+  background-color: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(4px); /* Эффект размытия */
+  color: #333;
+  font-weight: bold;
+  font-family: serif;
+  font-size: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Информационная панель, которая появляется по клику */
+.song-info-panel {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 20; /* Поверх всего */
+  background-color: #ffffff;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+.back-button {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background: none;
+  border: none;
+  font-size: 1em;
+  font-weight: bold;
+  cursor: pointer;
+  color: #555;
+}
+
+.info-line {
+  margin: 8px 0;
+  font-size: 1.1em;
+}
+
+.project-photo-button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  background-color: var(--element-bg-color);
+  font-weight: bold;
+  cursor: pointer;
 }
