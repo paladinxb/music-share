@@ -1,7 +1,29 @@
-<div>
-	text
-</div>
+<!-- src/app/app.component.html -->
+<div class="main-container">
+  <div class="title">{{ title }}</div>
 
-<div>
-  text 2
+  <div class="songs-list-container">
+    @for (song of songs; track song.title) {
+      <!-- Обновленная, упрощенная структура карточки -->
+      <div class="song-box">
+
+        <!-- 1. Верхний цветной блок (обложка) -->
+        <div class="song-cover">
+          <h3 class="cover-title">{{ song.title }}</h3>
+        </div>
+
+        <!-- 2. Нижний белый блок (информация) -->
+        <div class="song-info">
+          <h4 class="info-title">{{ song.title }}</h4>
+          <p class="info-artist">{{ song.artist }}</p>
+          <button class="quality-button" (click)="changeQuality(song)">
+            {{ song_quality[song.qualityIndex] }}
+          </button>
+        </div>
+
+      </div>
+    }
+  </div>
+
+  <div class="bottom-info">{{ author }}</div>
 </div>

@@ -1,3 +1,139 @@
-div {
-  color: red;
+/* src/app/app.component.css */
+
+/* .main-container и .title без изменений */
+.main-container {
+  background-color: var(--primary-bg-color);
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.title {
+  background-color: var(--element-bg-color);
+  font-size: 20pt;
+  font-weight: 300;
+  border-radius: 20px;
+  padding: 20px 40px;
+  margin-top: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* === СТИЛИ КОНТЕЙНЕРА СЕТКИ === */
+.songs-list-container {
+  width: 100%;
+  max-width: 1200px;
+  flex-grow: 1;
+  overflow-y: auto;
+  padding: 30px; /* Увеличим отступы */
+  box-sizing: border-box;
+  display: grid;
+
+  /* Как на картинке - 4 колонки */
+  grid-template-columns: repeat(4, 1fr);
+
+  /* Отступ между карточками */
+  gap: 30px;
+}
+
+/* === ПОЛНОСТЬЮ НОВЫЕ СТИЛИ ДЛЯ КАРТОЧКИ ПЕСНИ (КАК НА КАРТИНКЕ) === */
+.song-box {
+  background-color: #ffffff; /* Белый фон для нижней части */
+  border-radius: 16px; /* Более заметное скругление, как на картинке */
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.07);
+
+  /* Важно: скрывает все, что выходит за скругленные углы (например, углы картинки) */
+  overflow: hidden;
+
+  /* Делаем карточку flex-контейнером, чтобы управлять вложенными блоками */
+  display: flex;
+  flex-direction: column;
+
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.song-box:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* --- Верхняя цветная часть --- */
+.song-cover {
+  background-color: var(--element-bg-color);
+
+  /* Заставляет этот блок занимать все доступное пространство по высоте */
+  flex-grow: 1;
+
+  /* Центрируем название трека внутри */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 20px;
+  min-height: 150px; /* Минимальная высота, чтобы карточка не была слишком плоской */
+}
+
+.cover-title {
+  color: #003322; /* Более темный цвет для контраста */
+  font-size: 1.6em;
+  font-weight: 600;
+  text-align: center;
+  margin: 0;
+}
+
+/* --- Нижняя белая часть --- */
+.song-info {
+  padding: 16px 20px;
+  /* Не дает этому блоку сжиматься */
+  flex-shrink: 0;
+  background-color: #ffffff; /* Явно указываем фон */
+}
+
+.info-title {
+  font-size: 1em;
+  font-weight: 700;
+  color: #111;
+  margin: 0 0 4px 0;
+}
+
+.info-artist {
+  font-size: 0.9em;
+  color: #666;
+  margin: 0;
+}
+
+/* .bottom-info без изменений */
+.bottom-info {
+  width: 100%;
+  height: var(--bottom-bar-max-height);
+  background-color: var(--element-bg-color);
+  margin-top: auto;
+  clip-path: polygon(
+    0 0, 30% 0, 40% 46.7%, 60% 46.7%, 70% 0, 100% 0, 100% 100%, 0 100%
+  );
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  padding-bottom: 2vh;
+  box-sizing: border-box;
+  font-size: 16pt;
+  font-weight: bold;
+  color: #333;
+}
+
+
+
+.quality-button {
+  margin-top: 10px; /* Отступ сверху */
+  padding: 6px 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  background-color: #f0f0f0;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.2s ease;
+}
+
+.quality-button:hover {
+  background-color: #e0e0e0;
 }

@@ -1,1 +1,18 @@
-/* You can add global styles to this file, and also import other style files */
+/* src/styles.css */
+
+/*
+  CSS-переменные в :root доступны во всём приложении.
+  Это лучшее место для определения глобальной цветовой палитры.
+*/
+:root {
+  --primary-bg-color: azure;
+  --element-bg-color: rgb(147, 255, 219);
+  --bottom-bar-max-height: 15vh;
+  --bottom-bar-min-height: 8vh;
+}
+
+/* Сбрасываем стандартные отступы браузера */
+body {
+  margin: 0;
+  font-family: sans-serif;
+}
